@@ -37,6 +37,7 @@ resource "aws_subnet" "db_private_subnet2" {
 resource "aws_db_subnet_group" "db-subnet" {
 name = "DB subnet group"
 subnet_ids = [aws_subnet.db_private_subnet1.id, aws_subnet.db_private_subnet2.id]
+}
 
 tags = {
   Name = var.subnet-group-name
