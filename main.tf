@@ -20,7 +20,7 @@ resource "aws_subnet" "db_private_subnet" {
   availability_zone = var.aws_zone1
 
   tags = {
-    Name = var.private_subnet_tags1
+    Name = var.private_subnet_tags
   }
 }
 
