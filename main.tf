@@ -34,6 +34,42 @@ resource "aws_subnet" "db_private_subnet2" {
   }
 }
 
+resource "aws_subnet" "project_public_subnet" {
+  vpc_id            = aws_vpc.db_vpc.id
+  cidr_block        = var.public_subnet1
+  availability_zone = var.aws_zone2
+
+  tags = {
+    Name = var.public_subnet_tags1
+  }
+}
+
+resource "aws_internet_gateway" "project_ig" {
+  vpc_id = aws_vpc.db_vpc.id
+
+  tags = {
+    Name = var.internet_gateway_tags
+  }
+}
+
+resource "aws_route_table" "public_rt" {
+  vpc_id = aws_vpc.db_vpc.id
+
+  route {
+    cidr_block = var.route_table
+    gateway_id = aws_internet_gateway.project_ig.id
+  }
+
+  route {
+    ipv6_cidr_block = "::/0"
+    gateway_id      = aws_internet_gateway.project_ig.id
+  }
+
+  tags = {
+    Name = var.route_table_tags
+  }
+}
+
 resource "aws_db_subnet_group" "db-subnet" {
 name = "db-subnet-group"
 subnet_ids = [aws_subnet.db_private_subnet.id, aws_subnet.db_private_subnet2.id]

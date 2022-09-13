@@ -83,3 +83,23 @@ variable "subnet-group-name"{
   type = string
   description = "name of the subnet group"
 }
+
+variable "public_subnet_tags"{
+	type= string
+	description="tags for public subnet"
+}
+
+variable "internet_gateway_tags"{
+	type= string
+	description= "tags for internet gateway"
+}
+
+variable "route_table_tags"{
+	type= string
+	description= "tags for route table"
+}
+
+variable "public_subnet" {
+  type        = string
+  description = "public subnet ip cidr block"
+}
