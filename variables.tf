@@ -8,11 +8,6 @@ variable "aws_zone2"{
   description = "available aws zones"
 }
 
-variable "vpc_tags"{
-	type= string
-	description= "tags for vpc"
-}
-
 variable "private_subnet_tags1"{
 	type= string
 	description= "tags for private subnet"
@@ -33,10 +28,6 @@ variable "private_subnet2" {
   description = "private subnet ip cidr block"
 }
 
-variable "custom_vpc" {
-  type        = string
-  description = "custom vpc ip cidr block"
-}
 
 variable "aws_region" {
   type        = string

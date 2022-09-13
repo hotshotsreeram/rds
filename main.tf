@@ -6,16 +6,9 @@ provider "aws" {
   region  = var.aws_region
 }
 
-resource "aws_vpc" "db_vpc" {
-  cidr_block = var.custom_vpc
-
-  tags = {
-    Name = var.vpc_tags
-  }
-}
 
 resource "aws_subnet" "db_private_subnet" {
-  vpc_id            = aws_vpc.db_vpc.id
+  vpc_id            = "vpc-07a6e4aa6ebee2501"
   cidr_block        = var.private_subnet1
   availability_zone = var.aws_zone1
 
@@ -25,7 +18,7 @@ resource "aws_subnet" "db_private_subnet" {
 }
 
 resource "aws_subnet" "db_private_subnet2" {
-  vpc_id            = aws_vpc.db_vpc.id
+  vpc_id            = "vpc-07a6e4aa6ebee2501"
   cidr_block        = var.private_subnet2
   availability_zone = var.aws_zone2
 
@@ -48,7 +41,7 @@ subnet_ids = [aws_subnet.db_private_subnet.id, aws_subnet.db_private_subnet2.id]
 resource "aws_security_group" "database-security-group"{
   name = "Database Security Group"
   description = "Enable  MYSQL Aurora access on Port 3306"
-  vpc_id = aws_vpc.db_vpc.id
+  vpc_id = "vpc-07a6e4aa6ebee2501"
 
   ingress{
     description = "MYSQL/Aurora Access"
