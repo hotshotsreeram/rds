@@ -13,6 +13,16 @@ variable "private_subnet_tags1"{
 	description= "tags for private subnet"
 }
 
+variable "vpc_tags"{
+	type= string
+	description= "tags for vpc"
+}
+
+variable "custom_vpc" {
+  type        = string
+  description = "custom vpc ip cidr block"
+}
+
 variable "private_subnet_tags2"{
 	type= string
 	description= "tags for private subnet"
@@ -49,7 +59,7 @@ variable "instance_class"{
   description = "instance class"
 }
 
-variable "name"{
+variable "identifier"{
   type = string
   description = "db instance name"
 }

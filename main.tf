@@ -6,9 +6,16 @@ provider "aws" {
   region  = var.aws_region
 }
 
+resource "aws_vpc" "db_vpc" {
+  cidr_block = var.custom_vpc
+
+  tags = {
+    Name = var.vpc_tags
+  }
+}
 
 resource "aws_subnet" "db_private_subnet" {
-  vpc_id            = "vpc-07a6e4aa6ebee2501"
+  vpc_id            = aws_vpc.db_vpc.id
   cidr_block        = var.private_subnet1
   availability_zone = var.aws_zone1
 
@@ -18,7 +25,7 @@ resource "aws_subnet" "db_private_subnet" {
 }
 
 resource "aws_subnet" "db_private_subnet2" {
-  vpc_id            = "vpc-07a6e4aa6ebee2501"
+  vpc_id            = aws_vpc.db_vpc.id
   cidr_block        = var.private_subnet2
   availability_zone = var.aws_zone2
 
@@ -41,14 +48,14 @@ subnet_ids = [aws_subnet.db_private_subnet.id, aws_subnet.db_private_subnet2.id]
 resource "aws_security_group" "database-security-group"{
   name = "Database Security Group"
   description = "Enable  MYSQL Aurora access on Port 3306"
-  vpc_id = "vpc-07a6e4aa6ebee2501"
+  vpc_id = aws_vpc.db_vpc.id
 
   ingress{
     description = "MYSQL/Aurora Access"
     from_port = 3306
     to_port = 3306
     protocol = "tcp"
-    security_groups = ["sg-0c5503f90e6722373"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -67,11 +74,11 @@ resource "aws_db_instance" "practice_instance" {
   engine               = var.engine
   engine_version       = var.engine_version
   instance_class       = var.instance_class
-  db_name                 = var.name
+  identifier           = var.identifier
   username             = var.username
   password             = var.password
   parameter_group_name = var.parameter_group_name
   skip_final_snapshot  = true
+  public_accessible = true
   db_subnet_group_name = aws_db_subnet_group.db-subnet.name
-  vpc_security_group_ids = [aws_security_group.database-security-group.id]
 }
