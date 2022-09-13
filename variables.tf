@@ -103,3 +103,8 @@ variable "public_subnet" {
   type        = string
   description = "public subnet ip cidr block"
 }
+
+variable "route_table" {
+  type        = string
+  description = "route table ip cidr block"
+}
