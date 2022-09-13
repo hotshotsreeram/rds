@@ -44,6 +44,31 @@ subnet_ids = [aws_subnet.db_private_subnet.id, aws_subnet.db_private_subnet2.id]
   }
 }
 
+
+resource "aws_security_group" "database-security-group"{
+  name = "Database Security Group"
+  description = "Enable  MYSQL Aurora access on Port 3306"
+  vpc_id = aws_vpc.db_vpc.id
+
+  ingress{
+    description = "MYSQL/Aurora Access"
+    from_port = 3306
+    to_port = 3306
+    protocol = "tcp"
+    security_groups = "sg-0c5503f90e6722373"
+  }
+
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+
+  }
+  tags = {
+    Name = "database-security-group"
+  }
+}
 resource "aws_db_instance" "practice_instance" {
   allocated_storage    = 10
   engine               = var.engine
@@ -55,4 +80,5 @@ resource "aws_db_instance" "practice_instance" {
   parameter_group_name = var.parameter_group_name
   skip_final_snapshot  = true
   db_subnet_group_name = aws_db_subnet_group.db-subnet.name
+  vpc_security_group_ids = [aws_security_group.database-security-group.id]
 }
