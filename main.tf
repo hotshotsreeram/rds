@@ -70,6 +70,11 @@ resource "aws_route_table" "public_rt" {
   }
 }
 
+resource "aws_route_table_association" "a" {
+  subnet_id      = aws_subnet.project_public_subnet.id
+  route_table_id = aws_route_table.public_rt.id
+}
+
 resource "aws_db_subnet_group" "db-subnet" {
 name = "db-subnet-group"
 subnet_ids = [aws_subnet.db_private_subnet.id, aws_subnet.db_private_subnet2.id]
