@@ -78,7 +78,7 @@ variable "parameter_group_name"{
   description = "parameter group name"
 }
 
-variabl "subnet-group-name"{
+variable "subnet-group-name"{
   type = string
   description = "name of the subnet group"
 }
