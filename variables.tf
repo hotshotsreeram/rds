@@ -45,7 +45,7 @@ variable "aws_region" {
 
 variable "engine"{
   type = string
-  desctiption = "engine name"
+  description = "engine name"
 }
 
 variable "engine_version"{
