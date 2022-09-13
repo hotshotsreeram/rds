@@ -20,7 +20,7 @@ resource "aws_subnet" "db_private_subnet" {
   availability_zone = var.aws_zone1
 
   tags = {
-    Name = var.private_subnet_tags
+    Name = var.private_subnet_tags1
   }
 }
 
@@ -36,11 +36,11 @@ resource "aws_subnet" "db_private_subnet2" {
 
 resource "aws_subnet" "project_public_subnet" {
   vpc_id            = aws_vpc.db_vpc.id
-  cidr_block        = var.public_subnet1
+  cidr_block        = var.public_subnet
   availability_zone = var.aws_zone2
 
   tags = {
-    Name = var.public_subnet_tags1
+    Name = var.public_subnet_tags
   }
 }
 
