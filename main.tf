@@ -79,6 +79,5 @@ resource "aws_db_instance" "practice_instance" {
   password             = var.password
   parameter_group_name = var.parameter_group_name
   skip_final_snapshot  = true
-  public_accessible = true
   db_subnet_group_name = aws_db_subnet_group.db-subnet.name
 }
